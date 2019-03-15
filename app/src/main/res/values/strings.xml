@@ -3,4 +3,5 @@
     <string name="HomeTitle">BiblioBook</string>
     <string name="researchButton">Rechercher</string>
     <string name="favButton">Favoris</string>
+    <string name="logoDescription">logo</string>
 </resources>
