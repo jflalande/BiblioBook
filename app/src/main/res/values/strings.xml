@@ -6,4 +6,6 @@
     <string name="logoDescription">Logo</string>
     <string name="imageSearchDescription">Recherche</string>
     <string name="placeholderSearch">Rechercher par titre ou auteur</string>
+    <string name="humourToggleButton">Humour</string>
+    <string name="drameToggleButton">Drame</string>
 </resources>

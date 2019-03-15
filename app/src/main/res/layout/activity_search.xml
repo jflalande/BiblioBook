@@ -34,4 +34,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_search_category_default" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="132dp"
+        android:text="ToggleButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchField"
+        android:background="@drawable/select_toggle_button"
+        android:textColor="@drawable/select_toggle_button"
+        android:stateListAnimator="@null"
+        android:textOn="@string/humourToggleButton"
+        android:textOff="@string/humourToggleButton"/>
+
+    <ToggleButton
+        android:id="@+id/toggleButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="132dp"
+        android:text="ToggleButton"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton1"
+        app:layout_constraintTop_toBottomOf="@+id/searchField"
+        android:background="@drawable/select_toggle_button"
+        android:textColor="@drawable/select_toggle_button"
+        android:stateListAnimator="@null"
+        android:textOn="@string/drameToggleButton"
+        android:textOff="@string/drameToggleButton"/>
 </android.support.constraint.ConstraintLayout>
