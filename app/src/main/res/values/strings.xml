@@ -3,5 +3,7 @@
     <string name="HomeTitle">BiblioBook</string>
     <string name="researchButton">Rechercher</string>
     <string name="favButton">Favoris</string>
-    <string name="logoDescription">logo</string>
+    <string name="logoDescription">Logo</string>
+    <string name="imageSearchDescription">Recherche</string>
+    <string name="placeholderSearch">Rechercher par titre ou auteur</string>
 </resources>

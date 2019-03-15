@@ -8,7 +8,7 @@
     android:background="@color/logoColor">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logoImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/researchButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="150dp"
         android:layout_height="50dp"
@@ -26,13 +26,14 @@
         android:layout_marginTop="68dp"
         android:layout_marginEnd="8dp"
         android:background="@color/brown"
+        android:onClick="research"
         android:text="@string/researchButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/favButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="150dp"
         android:layout_height="50dp"
@@ -43,6 +44,6 @@
         android:text="@string/favButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/researchButton" />
 
 </android.support.constraint.ConstraintLayout>
