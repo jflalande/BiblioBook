@@ -8,4 +8,5 @@
     <string name="placeholderSearch">Rechercher par titre ou auteur</string>
     <string name="humourToggleButton">Humour</string>
     <string name="drameToggleButton">Drame</string>
+    <string name="topBarSearchText"></string>
 </resources>

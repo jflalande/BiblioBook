@@ -6,31 +6,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class Search extends AppCompatActivity {
+public class ResultList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        ImageView imageview1 = findViewById(R.id.searchIconImage);
+        setContentView(R.layout.activity_result_list);
+        TextView text = (TextView)findViewById(R.id.TopBarSearchText);
+        text.setText(getIntent().getStringExtra("SEARCHED"));
+        ImageView imageview1 = findViewById(R.id.returnToSearchArrow);
         imageview1.setOnClickListener(new View.OnClickListener() {
 
             @Override
 
             public void onClick(View v) {
 
-                Toast.makeText(Search.this, "Recherche lancée",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getBaseContext(), ResultList.class);
-                EditText edit = (EditText)findViewById(R.id.searchField);
-                intent.putExtra("SEARCHED", edit.getText().toString());
+                Intent intent = new Intent(getBaseContext(), Search.class);
                 startActivity(intent);
 
             }
 
         });
+
     }
-
-
 }

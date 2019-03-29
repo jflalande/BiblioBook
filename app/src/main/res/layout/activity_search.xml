@@ -31,6 +31,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="36dp"
+        android:contentDescription="@string/imageSearchDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_search_category_default" />
@@ -41,14 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
         android:layout_marginTop="132dp"
-        android:text="ToggleButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchField"
         android:background="@drawable/select_toggle_button"
-        android:textColor="@drawable/select_toggle_button"
         android:stateListAnimator="@null"
+        android:textColor="@drawable/select_toggle_button"
+        android:textOff="@string/humourToggleButton"
         android:textOn="@string/humourToggleButton"
-        android:textOff="@string/humourToggleButton"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchField" />
 
     <ToggleButton
         android:id="@+id/toggleButton2"
@@ -56,12 +56,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="132dp"
-        android:text="ToggleButton"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton1"
-        app:layout_constraintTop_toBottomOf="@+id/searchField"
         android:background="@drawable/select_toggle_button"
-        android:textColor="@drawable/select_toggle_button"
         android:stateListAnimator="@null"
+        android:textColor="@drawable/select_toggle_button"
+        android:textOff="@string/drameToggleButton"
         android:textOn="@string/drameToggleButton"
-        android:textOff="@string/drameToggleButton"/>
+        app:layout_constraintStart_toEndOf="@+id/toggleButton1"
+        app:layout_constraintTop_toBottomOf="@+id/searchField" />
 </android.support.constraint.ConstraintLayout>
