@@ -3,6 +3,8 @@ package com.example.bibliobook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,9 +20,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ResultList extends AppCompatActivity {
 
     private RequestQueue queue;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,34 +46,36 @@ public class ResultList extends AppCompatActivity {
 
             public void onClick(View v) {
 
-                Intent intent = new Intent(getBaseContext(), Search.class);
-                startActivity(intent);
+                finish();
 
             }
 
         });
-        final TextView textCenter = (TextView) findViewById(R.id.textView3);
+        //final TextView textCenter = (TextView) findViewById(R.id.textView3);
         String url = "https://www.googleapis.com/books/v1/volumes?q=" + searchedTerms;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        textCenter.setText("");
+
                         try {
                             JSONArray jsonArray = response.getJSONArray("items");
-
+                            TextView deb = (TextView) findViewById(R.id.debugLog);
+                            deb.setText("");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject livre = jsonArray.getJSONObject(i);
                                 JSONObject info = livre.getJSONObject("volumeInfo");
                                 String titre = info.getString("title");
                                 JSONArray auteurArray = info.getJSONArray("authors");
                                 String auteur = (String)auteurArray.get(0);
-                                textCenter.append(titre + " de " + auteur + "\n\n");
+                                JSONObject images = info.getJSONObject("imageLinks");
+                                String miniature = images.getString("thumbnail");
+                                deb.append(titre + " de " + auteur +"\n\n");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            textCenter.setText("JSON Parsing Failed");
+                            //textCenter.setText("JSON Parsing Failed");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -71,7 +83,7 @@ public class ResultList extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        textCenter.setText("Erreur lors de l'appel API");
+                        //textCenter.setText("Erreur lors de l'appel API");
                         error.printStackTrace();
                     }
                 });
