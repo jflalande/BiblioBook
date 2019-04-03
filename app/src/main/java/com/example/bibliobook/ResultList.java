@@ -1,10 +1,10 @@
 package com.example.bibliobook;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,20 +21,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class ResultList extends AppCompatActivity {
 
     private RequestQueue queue;
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<Livre> livreArrayList = new ArrayList<>();
+    private Livre[] sauvegarde = new Livre[100];
+    private Semaphore s = new Semaphore(0);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_list);
+
         queue = Volley.newRequestQueue(this);
         final TextView text = (TextView) findViewById(R.id.TopBarSearchText);
         String searchedTerms = getIntent().getStringExtra("SEARCHED");
@@ -51,8 +56,9 @@ public class ResultList extends AppCompatActivity {
             }
 
         });
-        //final TextView textCenter = (TextView) findViewById(R.id.textView3);
+        Log.d("TESTITO","MAIS JUSTE AVANT" + Thread.currentThread().getId());
         String url = "https://www.googleapis.com/books/v1/volumes?q=" + searchedTerms;
+        final TextView deb = (TextView) findViewById(R.id.debugLog);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -61,17 +67,24 @@ public class ResultList extends AppCompatActivity {
 
                         try {
                             JSONArray jsonArray = response.getJSONArray("items");
-                            TextView deb = (TextView) findViewById(R.id.debugLog);
-                            deb.setText("");
+                            //deb.setText("");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject livre = jsonArray.getJSONObject(i);
                                 JSONObject info = livre.getJSONObject("volumeInfo");
                                 String titre = info.getString("title");
                                 JSONArray auteurArray = info.getJSONArray("authors");
                                 String auteur = (String)auteurArray.get(0);
+                                JSONArray genreArray = info.getJSONArray("categories");
+                                String genre = (String)genreArray.get(0);
                                 JSONObject images = info.getJSONObject("imageLinks");
                                 String miniature = images.getString("thumbnail");
+                                String date = info.getString("publishedDate");
                                 deb.append(titre + " de " + auteur +"\n\n");
+                                Livre livreLoop = new Livre(titre,auteur,genre,date,miniature);
+                                livreArrayList.add(livreLoop);
+                                sauvegarde[i] = livreLoop;
+                                Log.d("TESTITO","err" + Thread.currentThread().getId());
+                                //deb.append(titre + livreArrayList.size());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -87,8 +100,16 @@ public class ResultList extends AppCompatActivity {
                         error.printStackTrace();
                     }
                 });
-        queue.add(jsonObjectRequest);
 
+        queue.add(jsonObjectRequest);
+        mRecyclerView = (RecyclerView)findViewById(R.id.recycler);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        Log.d("TESTITO","MAIS JUSTE APRES" + Thread.currentThread().getId());
+        mAdapter = new LivreAdapter(livreArrayList);
+        deb.setText("après");
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 
