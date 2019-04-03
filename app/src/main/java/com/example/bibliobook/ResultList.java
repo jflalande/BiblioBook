@@ -30,7 +30,6 @@ public class ResultList extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Livre> livreArrayList = new ArrayList<>();
-    private Livre[] sauvegarde = new Livre[100];
     private Semaphore s = new Semaphore(0);
 
 
@@ -56,9 +55,14 @@ public class ResultList extends AppCompatActivity {
             }
 
         });
-        Log.d("TESTITO","MAIS JUSTE AVANT" + Thread.currentThread().getId());
         String url = "https://www.googleapis.com/books/v1/volumes?q=" + searchedTerms;
-        final TextView deb = (TextView) findViewById(R.id.debugLog);
+        TextView deb = (TextView) findViewById(R.id.debugLog);
+
+        mRecyclerView = (RecyclerView)findViewById(R.id.recycler);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -79,13 +83,13 @@ public class ResultList extends AppCompatActivity {
                                 JSONObject images = info.getJSONObject("imageLinks");
                                 String miniature = images.getString("thumbnail");
                                 String date = info.getString("publishedDate");
-                                deb.append(titre + " de " + auteur +"\n\n");
+                                //deb.append(titre + " de " + auteur +"\n\n");
                                 Livre livreLoop = new Livre(titre,auteur,genre,date,miniature);
                                 livreArrayList.add(livreLoop);
-                                sauvegarde[i] = livreLoop;
-                                Log.d("TESTITO","err" + Thread.currentThread().getId());
                                 //deb.append(titre + livreArrayList.size());
                             }
+                            mAdapter = new LivreAdapter(livreArrayList);
+                            mRecyclerView.setAdapter(mAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             //textCenter.setText("JSON Parsing Failed");
@@ -100,16 +104,7 @@ public class ResultList extends AppCompatActivity {
                         error.printStackTrace();
                     }
                 });
-
         queue.add(jsonObjectRequest);
-        mRecyclerView = (RecyclerView)findViewById(R.id.recycler);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        Log.d("TESTITO","MAIS JUSTE APRES" + Thread.currentThread().getId());
-        mAdapter = new LivreAdapter(livreArrayList);
-        deb.setText("après");
-        mRecyclerView.setAdapter(mAdapter);
     }
 
 

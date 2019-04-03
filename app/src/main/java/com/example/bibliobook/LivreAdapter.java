@@ -21,16 +21,15 @@ public class LivreAdapter extends RecyclerView.Adapter<LivreAdapter.ViewHolder> 
     public LivreAdapter(ArrayList<Livre> mDataset) {
         this.mDataset = mDataset;
 
-        //Log.d("TESTITO","ok" + mDataset.size());
+        Log.d("TESTITO","ok" + mDataset.size());
     }
 
-    @NonNull
+
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card,viewGroup,false);
         ViewHolder vh = new ViewHolder(v);
-
-        //Log.d("TESTITO","onCreateViewHolder");
+        Log.d("TESTITO","onCreateViewHolder" + viewGroup.toString());
         return vh;
     }
 
@@ -41,31 +40,37 @@ public class LivreAdapter extends RecyclerView.Adapter<LivreAdapter.ViewHolder> 
         viewHolder.genre.setText(mDataset.get(i).getGenre());
         viewHolder.annee.setText(mDataset.get(i).getAnnee());
         Picasso.get().load(mDataset.get(i).getUrl()).into(viewHolder.miniature);
-        //Log.d("TESTITO","onBindViewHolder");
+        Log.d("TESTITO","onBindViewHolder");
     }
 
     @Override
     public int getItemCount() {
-        //Log.d("TESTITO","getItemCount" + mDataset.size());
+        Log.d("TESTITO","getItemCount" + mDataset.size());
         return mDataset.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView titre;
-        private TextView auteur;
-        private TextView genre;
-        private TextView annee;
-        private ImageView miniature;
+        private TextView titre = null;
+        private TextView auteur = null;
+        private TextView genre = null;
+        private TextView annee = null;
+        private ImageView miniature = null;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            Log.d("TESTITO","ViewHolder");
-            titre = (TextView)itemView.findViewById(R.id.title);
-            auteur = (TextView) itemView.findViewById(R.id.auteur);
-            genre = (TextView) itemView.findViewById(R.id.genre);
-            annee = (TextView) itemView.findViewById(R.id.annee);
-            miniature = (ImageView) itemView.findViewById(R.id.couverture);
+            if (titre == null){
+                Log.d("TESTITO","TITRE EST NUL AU DEBUT");
+            }
+            this.titre = itemView.findViewById(R.id.title);
+            this.auteur = itemView.findViewById(R.id.auteur);
+            this.genre = itemView.findViewById(R.id.genre);
+            this.annee = itemView.findViewById(R.id.annee);
+            this.miniature = itemView.findViewById(R.id.couverture);
+
+            if (titre == null){
+                Log.d("TESTITO","TITRE EST NUL A LA FIN");
+            }
 
         }
     }
