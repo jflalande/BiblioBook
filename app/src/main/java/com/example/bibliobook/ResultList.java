@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class ResultList extends AppCompatActivity {
             }
 
         });
+        //Log.e("JFL", "ici");
         //final TextView textCenter = (TextView) findViewById(R.id.textView3);
         String url = "https://www.googleapis.com/books/v1/volumes?q=" + searchedTerms;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -58,17 +60,23 @@ public class ResultList extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
+          //              Log.e("JFL", "Reponse");
 
                         try {
                             JSONArray jsonArray = response.getJSONArray("items");
                             TextView deb = (TextView) findViewById(R.id.debugLog);
                             deb.setText("");
+            //                Log.e("JFL", "jsonArray:" + jsonArray);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject livre = jsonArray.getJSONObject(i);
                                 JSONObject info = livre.getJSONObject("volumeInfo");
                                 String titre = info.getString("title");
-                                JSONArray auteurArray = info.getJSONArray("authors");
-                                String auteur = (String)auteurArray.get(0);
+                                Log.i("JFL", "info:" + info);
+                                String auteur = "No author";
+                                if (info.has("authors")) {
+                                    JSONArray auteurArray = info.getJSONArray("authors");
+                                    auteur = (String) auteurArray.get(0);
+                                }
                                 JSONObject images = info.getJSONObject("imageLinks");
                                 String miniature = images.getString("thumbnail");
                                 deb.append(titre + " de " + auteur +"\n\n");
